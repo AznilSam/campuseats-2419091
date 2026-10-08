@@ -1,4 +1,4 @@
-function Header({ cartCount }) {
+function Header() {
   const cartCount = 0 // becomes state in Part C
  
   return (
