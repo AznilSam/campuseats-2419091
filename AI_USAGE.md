@@ -11,3 +11,6 @@ Add a new section every week, before you tag. Did not use AI? Write "None" under
 - Tool(s):
 - none
 
+## Week 3
+- Tool(s):
+- none
