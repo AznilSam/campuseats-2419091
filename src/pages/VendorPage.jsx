@@ -1,9 +1,10 @@
-import { Link, useParams } from 'react-router'
+import { Link, useParams, useSearchParams } from 'react-router'
 import { useVendors } from '../hooks/useVendors.js'
 import MenuList from '../components/MenuList.jsx'
 
 function VendorPage() {
   const { id } = useParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { vendors, loading, error } = useVendors()
 
   if (loading) return <p>Loading vendors...</p>
@@ -21,11 +22,49 @@ function VendorPage() {
     )
   }
 
+  const categories = [...new Set(vendor.menu.map((item) => item.category))]
+
+  const cat = searchParams.get('cat')
+  const activeCat = categories.includes(cat) ? cat : ''
+
+  const visibleItems = activeCat
+    ? vendor.menu.filter((item) => item.category === activeCat)
+    : vendor.menu
+
+  function chooseCategory(category) {
+    if (category === '') {
+      setSearchParams({})
+    } else {
+      setSearchParams({ cat: category })
+    }
+  }
+
   return (
     <section>
       <p><Link to="/">← All vendors</Link></p>
       <h2 className="section-title">Menu: {vendor.name}</h2>
-      <MenuList items={vendor.menu} />
+
+      <div className="filters">
+        <button
+          type="button"
+          className={activeCat === '' ? 'chip active' : 'chip'}
+          onClick={() => chooseCategory('')}
+        >
+          All
+        </button>
+        {categories.map((category) => (
+          <button
+            key={category}
+            type="button"
+            className={activeCat === category ? 'chip active' : 'chip'}
+            onClick={() => chooseCategory(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <MenuList items={visibleItems} />
     </section>
   )
 }

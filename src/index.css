@@ -271,3 +271,24 @@ a.vendor-card,
 .nav a.active {
   text-decoration: underline;
 }
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.chip {
+  padding: 0.35rem 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  background: white;
+  cursor: pointer;
+}
+
+.chip.active {
+  background: #00695c;
+  color: white;
+  border-color: #00695c;
+}
