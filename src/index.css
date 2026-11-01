@@ -261,3 +261,13 @@ a.card:hover { border-color: var(--green-light); }
 .error {
   border-left: 4px solid #b3261e;
 }
+
+a.vendor-card,
+.nav a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav a.active {
+  text-decoration: underline;
+}
