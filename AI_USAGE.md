@@ -56,3 +56,25 @@ Add a new section every week, before you tag. Did not use AI? Write "None" under
 - It assumed my orders were in Firestore when they were in localStorage.
 
 **What I learned:** Old data saved in localStorage can crash a page when the data shape changes. A Git tag is a bookmark that I must create and push myself.
+
+## Week 6
+
+**Tool:** Claude
+
+**What I asked:**
+- Help with the Lab 6 Firestore code (vendors, menus, orders)
+- Code for fixing some of my personal feature, filter by category, using a Firestore where query
+- Help fixing errors
+
+**What I kept or changed:**
+- I used the services layer and onSnapshot hooks from the lab sheet
+- I gave the AI my vendors.json, and the filter buttons were changed to use each shop's own categories
+- I chose the pill style for the filter buttons from my own design 
+- I decided that my own shop should appear first on the home page
+- I tested the filter in the browser and in the Firestore console
+
+**What the AI got wrong:**
+- It first gave me guessed code before I shared the lab sheet
+- It used a fixed category list that did not match my shops
+
+**Bug I hit:** "Failed to resolve import ../hooks/useVendor.js" because I had not created the file yet. The vendors page was empty until I ran /seed.

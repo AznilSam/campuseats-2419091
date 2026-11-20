@@ -1,6 +1,18 @@
 import { useEffect, useState } from 'react'
+import { subscribeToVendors } from '../services/vendors.js'
 
-// Custom hook that hides the fetch / loading / error logic from Week 3 behind one call.
+const MY_MATRIC = '2419091'
+
+// My own shop first, then the others in alphabetical order by name.
+function sortVendors(list) {
+  return [...list].sort((a, b) => {
+    const aMine = a.id.startsWith(MY_MATRIC) ? 0 : 1
+    const bMine = b.id.startsWith(MY_MATRIC) ? 0 : 1
+    if (aMine !== bMine) return aMine - bMine
+    return a.name.localeCompare(b.name)
+  })
+}
+
 export function useVendors() {
   const [vendors, setVendors] = useState([])
   const [loading, setLoading] = useState(true)
@@ -8,26 +20,14 @@ export function useVendors() {
   const [reloadKey, setReloadKey] = useState(0)
 
   useEffect(() => {
-    const controller = new AbortController()
     setLoading(true)
     setError(null)
-
-    fetch('/api/vendors.json', { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        return res.json()
-      })
-      .then(setVendors)
-      .catch((err) => {
-        if (err.name !== 'AbortError') setError(err.message)
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) setLoading(false)
-      })
-
-    return () => controller.abort()
+    const unsubscribe = subscribeToVendors(
+      (data) => { setVendors(sortVendors(data)); setLoading(false) },
+      (err) => { setError(err.message); setLoading(false) },
+    )
+    return unsubscribe // stop listening when the component unmounts
   }, [reloadKey])
 
-  const reload = () => setReloadKey((k) => k + 1)
-  return { vendors, loading, error, reload }
+  return { vendors, loading, error, reload: () => setReloadKey((k) => k + 1) }
 }
