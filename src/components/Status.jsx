@@ -1,7 +1,8 @@
-// Small components for the loading and error states of fetched data.
+// Small components for the three states of fetched data.
 export function Loading() {
-  return <p className="muted" role="status">Loading menus…</p>
+  return <p className="muted" role="status">Loading…</p>
 }
+
 export function ErrorMessage({ message, onRetry }) {
   return (
     <div className="card error" role="alert">

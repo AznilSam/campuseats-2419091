@@ -1,31 +1,36 @@
+import { Link } from 'react-router'
 import { useCart } from '../hooks/useCart.js'
 
 function OrdersPage() {
   const { orders } = useCart()
 
   if (orders.length === 0) {
-    return <p className="muted">You have not placed any orders yet.</p>
+    return (
+      <section>
+        <h2 className="section-title">My orders</h2>
+        <p className="muted">No orders yet. <Link to="/">Browse vendors</Link></p>
+      </section>
+    )
   }
 
   return (
     <section>
-      <h2 className="section-title">My Orders</h2>
-      {orders.map((order) => (
-        <article key={order.id} className="card">
-          <h3>Order for {order.details.name}</h3>
-          <p className="muted">
-            {new Date(order.placedAt).toLocaleString()} · Mahallah {order.details.mahallah} · Pickup {order.details.pickupTime}
-          </p>
-          <ul>
-            {order.items.map((line) => (
-              <li key={line.id}>
-                {line.qty} × {line.name} (RM {(line.price * line.qty).toFixed(2)})
-              </li>
-            ))}
-          </ul>
-          <p className="cart-total">Total: RM {order.total.toFixed(2)}</p>
-        </article>
-      ))}
+      <h2 className="section-title">My orders</h2>
+      <ul className="order-list">
+        {orders.map((order) => (
+          <li key={order.id} className="card">
+            <p className="cart-name">
+              Pickup {order.pickupTime ?? '-'} · Mahallah {order.mahallah ?? '-'}
+            </p>
+            <p className="muted">
+              {(order.lines ?? [])
+                .map((l) => `${l.qty}× ${l.item?.name ?? l.name ?? 'Item'}`)
+                .join(', ')}
+            </p>
+            <p className="price">RM {(order.total ?? 0).toFixed(2)}</p>
+          </li>
+        ))}
+      </ul>
     </section>
   )
 }

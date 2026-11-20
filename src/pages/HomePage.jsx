@@ -1,19 +1,12 @@
 import { useVendors } from '../hooks/useVendors.js'
 import VendorCard from '../components/VendorCard.jsx'
+import { Loading, ErrorMessage } from '../components/Status.jsx'
 
 function HomePage() {
   const { vendors, loading, error, reload } = useVendors()
 
-  if (loading) return <p>Loading vendors...</p>
-
-  if (error) {
-    return (
-      <div>
-        <p>Error: {error}</p>
-        <button type="button" className="btn" onClick={reload}>Try again</button>
-      </div>
-    )
-  }
+  if (loading) return <Loading />
+  if (error) return <ErrorMessage message={error} onRetry={reload} />
 
   return (
     <section>

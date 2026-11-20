@@ -2,16 +2,20 @@ import { useState } from 'react'
 
 const MAHALLAHS = ['Ali', 'Aminah', 'Faruq', 'Asiah', 'Bilal', 'Hafsa', 'Uthman', 'Zubair']
 
+// Validation lives in a plain function so it is easy to test and to read.
 function validate(values) {
   const errors = {}
   if (values.name.trim().length < 3) errors.name = 'Enter your name (at least 3 characters).'
-  if (values.mahallah === '') errors.mahallah = 'Choose your mahallah.'
-  if (values.pickupTime === '' || values.pickupTime < '07:00' || values.pickupTime > '22:00') {
-    errors.pickupTime = 'Pick a time between 07:00 and 22:00.'
+  if (!values.mahallah) errors.mahallah = 'Choose your mahallah.'
+  if (!values.pickupTime) {
+    errors.pickupTime = 'Choose a pickup time.'
+  } else if (values.pickupTime < '07:00' || values.pickupTime > '22:00') {
+    errors.pickupTime = 'Pickup must be between 7:00 am and 10:00 pm.'
   }
   return errors
 }
 
+// A CONTROLLED form: every input's value comes from state, and every change updates state.
 function CheckoutForm({ onPlaceOrder }) {
   const [values, setValues] = useState({ name: '', mahallah: '', pickupTime: '' })
   const [errors, setErrors] = useState({})
@@ -22,7 +26,7 @@ function CheckoutForm({ onPlaceOrder }) {
   }
 
   function handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault() // stop the browser reloading the page
     const found = validate(values)
     setErrors(found)
     if (Object.keys(found).length === 0) {
@@ -41,18 +45,14 @@ function CheckoutForm({ onPlaceOrder }) {
       <label htmlFor="mahallah">Mahallah</label>
       <select id="mahallah" name="mahallah" value={values.mahallah} onChange={handleChange}>
         <option value="">Select…</option>
-        {MAHALLAHS.map((m) => <option key={m} value={m}>{m}</option>)}
+        {MAHALLAHS.map((m) => (
+          <option key={m} value={m}>{m}</option>
+        ))}
       </select>
       {errors.mahallah && <p className="field-error">{errors.mahallah}</p>}
 
       <label htmlFor="pickupTime">Pickup time</label>
-      <input
-        id="pickupTime"
-        name="pickupTime"
-        type="time"
-        value={values.pickupTime}
-        onChange={handleChange}
-      />
+      <input id="pickupTime" name="pickupTime" type="time" value={values.pickupTime} onChange={handleChange} />
       {errors.pickupTime && <p className="field-error">{errors.pickupTime}</p>}
 
       <button type="submit" className="btn">Place order</button>

@@ -1,3 +1,4 @@
+// Footer: shows a JavaScript expression (the current year) inside JSX.
 function Footer() {
   return (
     <footer className="footer">
@@ -5,5 +6,5 @@ function Footer() {
     </footer>
   )
 }
- 
+
 export default Footer

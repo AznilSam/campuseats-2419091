@@ -1,19 +1,25 @@
-# React + Vite
+# CampusEats: Week 5 starter (BICS 3301)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The end-of-Week-5 CampusEats app: everything from Weeks 1–4 (custom hooks, cart context,
+routing) plus Firebase Authentication (register, log in with email or Google, log out,
+protected cart and orders pages). Use it if your own app is not ready for Week 6
+(Route B in "W05_Choose_Your_Route_v2" on iTa'LeeM).
 
-Currently, two official plugins are available:
+## How to use it
+Follow Step 3 of the "Choose your route" guide. In short:
+1. Keep your own repo. Tag `react-done` (M1) and push it first.
+2. Replace your app files with these. Keep your own `.git`, `README.md`, `AI_USAGE.md`,
+   `REFLECTION.md` and `.env.local`.
+3. Put your own shop back into `public/api/vendors.json` and bring your personal feature across.
+4. No `.env.local` yet? Copy `.env.example` to `.env.local` and paste the six values from
+   your own Firebase project (pre-work Part 4). Turn on Email/Password and Google sign-in.
+5. `npm install`, then `npm run dev`. Register an account, log in, log out.
+6. Add "Base: switched to the Week 5 starter on <date>" to your README and commit
+   `Switch to Week 5 starter`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Marks
+- M1 and Weeks 1–4: your own work at your own tags. Unchanged.
+- Firebase marks count from Week 6, for everyone. The starter itself earns and loses no marks.
+- Students who did Lab 5 themselves (their own `week-5` tag with working login) get a bonus mark.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-Vendors 2–4 from 2419671 and 2418507 and 2413997
 Firebase project ID: campuseats-2419091

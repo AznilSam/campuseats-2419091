@@ -9,30 +9,33 @@ function CartPage() {
 
   function handlePlaceOrder(details) {
     placeOrder(details)
-    navigate('/orders')
+    navigate('/orders') // move to another page from code, not from a click on a link
   }
 
   if (cart.length === 0) {
-    return <p className="muted">Your cart is empty. Pick something from a menu first.</p>
+    return (
+      <section>
+        <h2 className="section-title">Your cart</h2>
+        <p className="muted">Your cart is empty. Pick something from a menu first.</p>
+      </section>
+    )
   }
 
   return (
-    <div className="cart-layout">
-      <div className="card">
-        <ul className="cart-list">
-          {cart.map((line) => (
-            <CartItem
-              key={line.id}
-              line={line}
-              onChangeQty={changeQty}
-              onRemove={removeFromCart}
-            />
-          ))}
-        </ul>
-        <p className="cart-total">Total: RM {total.toFixed(2)}</p>
+    <section>
+      <h2 className="section-title">Your cart</h2>
+      <div className="cart-layout">
+        <div className="card">
+          <ul className="cart-list">
+            {cart.map((line) => (
+              <CartItem key={line.item.id} line={line} onChangeQty={changeQty} onRemove={removeFromCart} />
+            ))}
+          </ul>
+          <p className="cart-total">Total: RM {total.toFixed(2)}</p>
+        </div>
+        <CheckoutForm onPlaceOrder={handlePlaceOrder} />
       </div>
-      <CheckoutForm onPlaceOrder={handlePlaceOrder} />
-    </div>
+    </section>
   )
 }
 

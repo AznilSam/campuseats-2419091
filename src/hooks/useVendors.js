@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+// Custom hook that hides the fetch / loading / error logic from Week 3 behind one call.
 export function useVendors() {
   const [vendors, setVendors] = useState([])
   const [loading, setLoading] = useState(true)
@@ -7,34 +8,26 @@ export function useVendors() {
   const [reloadKey, setReloadKey] = useState(0)
 
   useEffect(() => {
-    let cancelled = false
-
-    fetch('/api/vendors.json')
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to load vendors')
-        return res.json()
-      })
-      .then((data) => {
-        if (cancelled) return
-        setVendors(data)
-        setLoading(false)
-      })
-      .catch((err) => {
-        if (cancelled) return
-        setError(err.message)
-        setLoading(false)
-      })
-
-    return () => {
-      cancelled = true
-    }
-  }, [reloadKey])
-
-  function reload() {
+    const controller = new AbortController()
     setLoading(true)
     setError(null)
-    setReloadKey((k) => k + 1)
-  }
 
+    fetch('/api/vendors.json', { signal: controller.signal })
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        return res.json()
+      })
+      .then(setVendors)
+      .catch((err) => {
+        if (err.name !== 'AbortError') setError(err.message)
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setLoading(false)
+      })
+
+    return () => controller.abort()
+  }, [reloadKey])
+
+  const reload = () => setReloadKey((k) => k + 1)
   return { vendors, loading, error, reload }
 }

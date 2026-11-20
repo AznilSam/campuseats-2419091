@@ -1,6 +1,7 @@
 import MenuItemCard from './MenuItemCard.jsx'
 import { useCart } from '../hooks/useCart.js'
 
+// MenuList gets addToCart from context instead of an onAdd prop.
 function MenuList({ items }) {
   const { addToCart } = useCart()
 
