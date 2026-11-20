@@ -33,3 +33,26 @@ Add a new section every week, before you tag. Did not use AI? Write "None" under
   - Tested direct URLs, refresh and the not found pages in the browser
 - One thing the AI got wrong:
   - The AI first wrote CartProvider before it saw my CartItem and CartPage. My starter files used a different cart shape ({ item, qty }) and a different way of changing quantity (-1), so the first code did not fit. The AI then rewrote CartItem, CartPage and CheckoutForm to match.
+
+  ## Week 5
+
+**Tool:** Claude
+
+**What I asked:** Help fixing a React error on the Orders page, understanding Git errors, and adding orders to Firebase.
+
+**What the AI gave me:**
+- Found the cause of "Cannot read properties of undefined" in OrdersPage.jsx (old orders saved in localStorage with a different shape).
+- Gave me safe code with `?.` and `?? []` so the page does not crash.
+- Showed me how to connect my folder to my GitHub repo (`git init`, `git remote add`, `git fetch`, `git reset`).
+- Explained the difference between a commit and a tag.
+- Suggested code to save orders in Firestore.
+
+**What I used and what I changed:**
+- I used the safe `OrdersPage.jsx` fix and the Git commands.
+- I did not keep the Firestore orders code, because saving orders in Firestore is Lab 6 work. I put CartProvider.jsx back to the localStorage version.
+
+**What the AI got wrong:**
+- It first guessed the wrong field name (`items` instead of `lines`) before I showed my real code.
+- It assumed my orders were in Firestore when they were in localStorage.
+
+**What I learned:** Old data saved in localStorage can crash a page when the data shape changes. A Git tag is a bookmark that I must create and push myself.
